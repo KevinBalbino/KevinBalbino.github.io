@@ -38,3 +38,7 @@ Estrutura da pasta:
     │   └── script.js           # Lógica e interatividade em JavaScript
     ├── img/                    # Imagens dos produtos e da galeria
     └── fonts/                  # Arquivos das fontes locais (Inclusive Sans e Ubuntu Mono)
+
+Link para o site (GitHub Pages)
+
+https://kevinbalbino.github.io
