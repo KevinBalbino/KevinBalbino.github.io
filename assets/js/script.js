@@ -61,25 +61,98 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // =========================================================
-  // 3. EFEITOS JS: HOVER INTERATIVO NOS CARDS
+  // 3. EFEITOS JS: HOVER DESKTOP vs. CENTRALIZAÇÃO EM TELAS MENORES
   // =========================================================
-  const interactiveCards = document.querySelectorAll(".botton-card, .testimonial-card, .secao2-block-green, .secao2-sub-green");
+  const selectorTarget = ".botton-card, .testimonial-card, .secao2-block-green, .secao2-sub-green";
+  const interactiveCards = document.querySelectorAll(selectorTarget);
 
+  const applyHover = (el) => {
+    if (!el) return;
+    el.style.transform = "translateY(-8px) scale(1.03)";
+    el.style.boxShadow = "0 18px 32px rgba(0, 0, 0, 0.18)";
+    el.style.filter = "brightness(1.03)";
+  };
+
+  const resetHover = (el) => {
+    if (!el) return;
+    el.style.transform = "translateY(0) scale(1)";
+    el.style.boxShadow = "none";
+    el.style.filter = "brightness(1)";
+  };
+
+  // Aplica transição em todos os cards
   interactiveCards.forEach(card => {
     card.style.transition = "transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.35s ease, filter 0.35s ease";
     
+    // HOVER TRADICIONAL (Apenas telas de Computador > 992px)
     card.addEventListener("mouseenter", () => {
-      card.style.transform = "translateY(-8px) scale(1.03)";
-      card.style.boxShadow = "0 18px 32px rgba(0, 0, 0, 0.18)";
-      card.style.filter = "brightness(1.03)";
+      if (window.innerWidth > 992) {
+        applyHover(card);
+      }
     });
 
     card.addEventListener("mouseleave", () => {
-      card.style.transform = "translateY(0) scale(1)";
-      card.style.boxShadow = "none";
-      card.style.filter = "brightness(1)";
+      if (window.innerWidth > 992) {
+        resetHover(card);
+      }
     });
   });
+
+  // CENTRALIZAÇÃO DA TELA (Apenas telas menores <= 992px)
+  let currentActiveCenterElement = null;
+  let isTicking = false;
+
+  const checkCenterHoverElement = () => {
+    // Se for computador/tela grande, cancela a lógica de centralização
+    if (window.innerWidth > 992) {
+      if (currentActiveCenterElement) {
+        resetHover(currentActiveCenterElement);
+        currentActiveCenterElement = null;
+      }
+      return;
+    }
+
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const elementAtCenter = document.elementFromPoint(centerX, centerY);
+    const targetElement = elementAtCenter ? elementAtCenter.closest(selectorTarget) : null;
+
+    if (targetElement !== currentActiveCenterElement) {
+      if (currentActiveCenterElement) {
+        resetHover(currentActiveCenterElement);
+      }
+      if (targetElement) {
+        applyHover(targetElement);
+      }
+      currentActiveCenterElement = targetElement;
+    }
+  };
+
+  const onScrollOrTouch = () => {
+    if (!isTicking) {
+      requestAnimationFrame(() => {
+        checkCenterHoverElement();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  };
+
+  // Eventos para escutar o movimento no mobile/telas menores
+  window.addEventListener("scroll", onScrollOrTouch, { passive: true });
+  window.addEventListener("touchmove", onScrollOrTouch, { passive: true });
+  window.addEventListener("touchend", onScrollOrTouch, { passive: true });
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 992 && currentActiveCenterElement) {
+      resetHover(currentActiveCenterElement);
+      currentActiveCenterElement = null;
+    } else {
+      onScrollOrTouch();
+    }
+  }, { passive: true });
+
+  // Verificação inicial no carregamento
+  checkCenterHoverElement();
 
   // =========================================================
   // 4. EFEITOS JS: PARALLAX NOS CÍRCULOS DO HERO
@@ -162,11 +235,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const gallerySwiperElement = document.querySelector(".gallerySwiper");
 
   if (gallerySwiperElement) {
-    // Proporções exatas baseadas nas áreas em mm² (70mm², 125mm², 237mm²)
     const scaleStates = [
-      [0.54, 0.73, 1.00], // Estado 1: [Pequeno, Médio, Grande]
-      [1.00, 0.54, 0.73], // Estado 2: [Grande, Pequeno, Médio]
-      [0.73, 1.00, 0.54]  // Estado 3: [Médio, Grande, Pequeno]
+      [0.54, 0.73, 1.00],
+      [1.00, 0.54, 0.73],
+      [0.73, 1.00, 0.54]
     ];
 
     let currentStep = 0;
@@ -174,7 +246,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let lastStepTime = 0;
     let watchdogTimer = null;
 
-    // Função para limpar os estilos de broches em slides inativos
     const resetAllImages = () => {
       const allImages = gallerySwiperElement.querySelectorAll(".grid-gallery-trio img");
       allImages.forEach(img => {
@@ -182,7 +253,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     };
 
-    // Alterna dinamicamente a escala dos 3 broches do slide ativo
     const triggerNextScaleStep = () => {
       if (!isProcessing) return;
 
@@ -192,7 +262,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const images = activeSlide.querySelectorAll(".grid-gallery-trio img");
       if (images.length !== 3) return;
 
-      // Registra o timestamp da execução atual para o Watchdog verificar
       lastStepTime = Date.now();
 
       const currentScales = scaleStates[currentStep % scaleStates.length];
@@ -220,7 +289,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     };
 
-    // Inicia o ciclo no slide visível
     const startSlideCycle = () => {
       isProcessing = true;
       currentStep = 0;
@@ -234,28 +302,21 @@ document.addEventListener("DOMContentLoaded", () => {
       startWatchdog();
     };
 
-    // Parar temporizadores ao trocar de slide
     const stopSlideCycle = () => {
       isProcessing = false;
       stopWatchdog();
       resetAllImages();
     };
 
-    // =========================================================
-    // GATILHO WATCHDOG (VERIFICA SE A ANIMAÇÃO PAROU OU TRAVOU)
-    // =========================================================
     const checkAnimationHealth = () => {
       if (!isProcessing) return;
 
       const now = Date.now();
       const timeSinceLastStep = now - lastStepTime;
 
-      // O tempo normal de uma transição é ~1.1s (600ms CSS + 500ms de intervalo).
-      // Se passar de 2.5s sem nenhuma troca, significa que houve travamento ou falha.
       if (timeSinceLastStep > 2500) {
         console.warn("Watchdog: Falha detectada na troca de tamanho dos broches. Reiniciando ciclo...");
         
-        // Remove ouvintes pendentes que possam ter ficado órfãos
         const activeSlide = gallerySwiperElement.querySelector(".swiper-slide-active");
         if (activeSlide) {
           const images = activeSlide.querySelectorAll(".grid-gallery-trio img");
@@ -264,14 +325,12 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
 
-        // Tenta reativar o ciclo
         triggerNextScaleStep();
       }
     };
 
     const startWatchdog = () => {
       stopWatchdog();
-      // Verifica a cada 2 segundos o estado de saúde da animação
       watchdogTimer = setInterval(checkAnimationHealth, 2000);
     };
 
@@ -282,7 +341,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
 
-    // Inicialização do Swiper.js com Coverflow
     const swiper = new Swiper(".gallerySwiper", {
       effect: "coverflow",
       grabCursor: true,
