@@ -87,6 +87,9 @@
   }
 }
 
+/* =========================================================
+   RESETS E BASE GLOBAL
+   ========================================================= */
 * {
   margin: 0;
   padding: 0;
@@ -334,7 +337,9 @@ span.js-ripple {
   }
 }
 
-/* HERO SECTION */
+/* =========================================================
+   HERO SECTION
+   ========================================================= */
 .hero-section {
   background-color: var(--primary);
   padding: clamp(40px, 6vw, 80px) 0;
@@ -469,7 +474,9 @@ span.js-ripple {
   font-size: 2.2rem;
 }
 
-/* SEÇÃO 2: SOBRE NÓS */
+/* =========================================================
+   SEÇÃO 2: SOBRE NÓS
+   ========================================================= */
 .section-grid-asymmetric {
   display: grid;
   grid-template-columns: 1.5fr 1.5fr 1fr;
@@ -546,7 +553,7 @@ span.js-ripple {
 }
 
 /* =========================================================
-   SEÇÃO 4: GALERIA DE IMAGENS - SWIPER COVERFLOW & ALTERNÂNCIA DE BROCHES
+   SEÇÃO 4: GALERIA DE IMAGENS - SWIPER COVERFLOW & RESPONSIVO
    ========================================================= */
 .gallerySwiper {
   width: 100%;
@@ -596,6 +603,24 @@ span.js-ripple {
               box-shadow 0.3s ease;
   will-change: transform;
   user-select: none;
+}
+
+/* --- AJUSTE RESPONSIVO: GALERIA VERTICAL EM TELAS MENORES (<= 992px) --- */
+@media (max-width: 992px) {
+  .gallerySwiper .swiper-slide {
+    width: 320px;
+    max-width: 85vw;
+  }
+
+  .grid-gallery-trio {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .grid-gallery-trio img {
+    width: 110px;
+    height: 110px;
+  }
 }
 
 /* Reseta os broches nos slides inativos */
@@ -652,7 +677,9 @@ span.js-ripple {
   background-color: var(--secondary) !important;
 }
 
-/* CONTATO & RODAPÉ */
+/* =========================================================
+   CONTATO & RODAPÉ
+   ========================================================= */
 .contact-form-container {
   background-color: var(--card-bg);
   border: 1px solid var(--border-color);
