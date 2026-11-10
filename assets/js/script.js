@@ -172,50 +172,136 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollObserver.observe(sec);
   });
 
+// =========================================================
+  // 7. GALERIA CARROSSEL (100% MANUAL - ANIMAÇÃO INICIAL CORRIGIDA)
   // =========================================================
-  // 7. GALERIA CARROSSEL (SWIPER.JS)
-  // =========================================================
-  if (document.querySelector(".gallerySwiper")) {
-    new Swiper(".gallerySwiper", {
-      effect: "coverflow",
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: "auto",
-      loop: true,
-      loopPreventsSliding: false,
-      loopedSlides: 3,
-      preloadImages: true,
-      updateOnImagesReady: true,
-      speed: 700,
-      freeMode: {
-        enabled: true,
-        sticky: true,
-        momentum: true,
-        momentumRatio: 0.7,
-        momentumVelocityRatio: 0.7,
-        momentumBounce: false,
-      },
-      autoplay: {
-        delay: 3200,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true,
-      },
-      coverflowEffect: {
-        rotate: 0,
-        stretch: 0,
-        depth: 90,
-        modifier: 1.8,
-        slideShadows: false,
-      },
-      navigation: {
-        nextEl: ".swiper-button-next-custom",
-        prevEl: ".swiper-button-prev-custom",
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      slideToClickedSlide: true,
+  const galleryCarouselElement = document.getElementById("galleryCarousel");
+
+  if (galleryCarouselElement) {
+    // 1. Remove o atributo HTML que força a reprodução automática do Bootstrap
+    galleryCarouselElement.removeAttribute("data-bs-ride");
+
+    // 2. Inicializa a instância do Bootstrap Carousel sem automação de slide
+    const galleryCarousel = new bootstrap.Carousel(galleryCarouselElement, {
+      interval: false,
+      ride: false,
+      pause: true,
+      touch: true,
+      wrap: true
+    });
+
+    galleryCarousel.pause();
+
+    // Proporções exatas baseadas nas áreas em mm² (70mm², 125mm², 237mm²)
+    const scaleStates = [
+      [0.54, 0.73, 1.00], // Estado 1: [Pequeno, Médio, Grande]
+      [1.00, 0.54, 0.73], // Estado 2: [Grande, Pequeno, Médio]
+      [0.73, 1.00, 0.54]  // Estado 3: [Médio, Grande, Pequeno]
+    ];
+
+    let currentStep = 0;
+    let isProcessing = false;
+
+    // Reseta o estilo inline de TODAS as imagens para o padrão do CSS
+    const resetAllImages = () => {
+      const allImages = galleryCarouselElement.querySelectorAll(".grid-gallery-trio img");
+      allImages.forEach(img => {
+        img.style.transform = "";
+      });
+    };
+
+    // Aplica o redimensionamento dinâmico sem passar o slide
+    const triggerNextScaleStep = () => {
+      if (!isProcessing) return;
+
+      const activeSlide = galleryCarouselElement.querySelector(".carousel-item.active");
+      if (!activeSlide) return;
+
+      const images = activeSlide.querySelectorAll(".grid-gallery-trio img");
+      if (images.length !== 3) return;
+
+      const currentScales = scaleStates[currentStep % scaleStates.length];
+      const targetImg = images[0];
+
+      // Função que agenda o próximo passo ao término da transição
+      const onTransitionEnd = (e) => {
+        if (e.propertyName !== "transform") return;
+        targetImg.removeEventListener("transitionend", onTransitionEnd);
+
+        if (!isProcessing) return;
+
+        currentStep++;
+
+        // Intervalo de 500ms entre as alterações de tamanho
+        setTimeout(() => {
+          triggerNextScaleStep();
+        }, 500);
+      };
+
+      // Registra o evento ANTES de aplicar o novo transform
+      targetImg.addEventListener("transitionend", onTransitionEnd);
+
+      // Usar requestAnimationFrame garante que o CSS perceba a mudança de escala
+      // e dispara a transição com animação visual desde o 1º carregamento
+      requestAnimationFrame(() => {
+        images.forEach((img, idx) => {
+          img.style.transform = `scale(${currentScales[idx]})`;
+        });
+      });
+    };
+
+    // Inicia a troca de tamanhos no slide visível
+    const startSlideCycle = () => {
+      isProcessing = true;
+      currentStep = 0;
+      resetAllImages();
+
+      // Pequeno atraso para garantir que o DOM e o layout do primeiro carregamento estejam prontos
+      requestAnimationFrame(() => {
+        triggerNextScaleStep();
+      });
+    };
+
+    // Executa assim que a página carrega
+    startSlideCycle();
+
+    // Quando o usuário solicita a troca de slide (setas, indicadores ou drag)
+    galleryCarouselElement.addEventListener("slide.bs.carousel", () => {
+      isProcessing = false;
+      resetAllImages();
+    });
+
+    // Quando a transição de slide termina, inicia a animação no novo slide
+    galleryCarouselElement.addEventListener("slid.bs.carousel", () => {
+      startSlideCycle();
+    });
+
+    // --- Suporte a arrastar com o MOUSE no Desktop ---
+    let startX = 0;
+    let isDragging = false;
+
+    galleryCarouselElement.addEventListener("mousedown", (e) => {
+      startX = e.clientX;
+      isDragging = true;
+    });
+
+    galleryCarouselElement.addEventListener("mouseup", (e) => {
+      if (!isDragging) return;
+      const endX = e.clientX;
+      const diffX = startX - endX;
+
+      if (Math.abs(diffX) > 50) {
+        if (diffX > 0) {
+          galleryCarousel.next();
+        } else {
+          galleryCarousel.prev();
+        }
+      }
+      isDragging = false;
+    });
+
+    galleryCarouselElement.addEventListener("mouseleave", () => {
+      isDragging = false;
     });
   }
 

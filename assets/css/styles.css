@@ -547,25 +547,19 @@ span.js-ripple {
 }
 
 /* =========================================================
-   SEÇÃO 4: GALERIA DE IMAGENS - CARROSSEL COVERFLOW (SWIPER)
+   SEÇÃO 4: GALERIA DE IMAGENS - CARROSSEL (BOOTSTRAP)
    ========================================================= */
-.gallerySwiper {
+.custom-gallery-carousel {
   width: 100%;
-  padding-top: 20px;
-  padding-bottom: 55px;
-  overflow: hidden;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 10px;
+  padding-bottom: 60px;
+  position: relative;
 }
 
-.gallerySwiper .swiper-wrapper {
-  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
-  will-change: transform;
-}
-
-.gallerySwiper .swiper-slide {
-  width: 600px;
-  max-width: 90vw;
-  height: auto;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+.custom-gallery-carousel .carousel-item {
+  transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
 }
 
 .gallery-slide-card {
@@ -576,6 +570,7 @@ span.js-ripple {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   transition: all 0.4s ease;
   cursor: pointer;
+  margin: 0 auto;
 }
 
 .grid-gallery-trio {
@@ -596,37 +591,22 @@ span.js-ripple {
   user-select: none;
 }
 
-/* Slide Central Destacado */
-.gallerySwiper .swiper-slide-active .gallery-slide-card {
-  opacity: 1;
-  transform: scale(1.05);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
-}
-
-.gallerySwiper .swiper-slide-active .grid-gallery-trio img:hover {
+.grid-gallery-trio img:hover {
   transform: scale(1.15);
   border-radius: 16px;
   box-shadow: 0 12px 28px rgba(0,0,0,0.25);
 }
 
-/* Slides Laterais */
-.gallerySwiper .swiper-slide:not(.swiper-slide-active) .gallery-slide-card {
-  opacity: 0.55;
-  transform: scale(0.88);
-  box-shadow: none;
-}
-
 /* Controles Minimalistas (< >) */
-.swiper-controls-center {
+.carousel-controls-center {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 16px;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
-.swiper-button-prev-custom,
-.swiper-button-next-custom {
+.carousel-btn-custom {
   background: transparent;
   border: none;
   color: var(--secondary);
@@ -636,14 +616,31 @@ span.js-ripple {
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.swiper-button-prev-custom:hover,
-.swiper-button-next-custom:hover {
+.carousel-btn-custom:hover {
   color: var(--primary);
   transform: scale(1.25);
 }
 
-.swiper-pagination-bullet-active {
+/* Indicadores/Paginação Customizados */
+.custom-indicators {
+  position: relative;
+  margin: 15px 0 0 0;
+}
+
+.custom-indicators [data-bs-target] {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--border-color);
+  border: none;
+  opacity: 0.6;
+  transition: opacity 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+}
+
+.custom-indicators .active {
   background-color: var(--secondary) !important;
+  opacity: 1;
+  transform: scale(1.2);
 }
 
 /* Contato & Rodapé */
@@ -673,4 +670,18 @@ span.js-ripple {
 .footer-custom {
   background-color: var(--secondary);
   color: #ffffff;
+}
+
+/* Transição suave para a animação de tamanho dos broches */
+.grid-gallery-trio img {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-radius 0.3s ease, 
+              box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+/* Quando o slide não estiver ativo, reseta o tamanho original (escala 1) */
+.carousel-item:not(.active) .grid-gallery-trio img {
+  transform: scale(1) !important;
+  transition: none !important; /* Desativa a transição ao sair para o resete ser instantâneo */
 }

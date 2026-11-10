@@ -6,10 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Broches do Lemuel | Venda de Bottons Personalizados</title>
 
-  <!-- CDNs das dependências de UI: Bootstrap 5, Bootstrap Icons e Swiper.js -->
+  <!-- CDNs das dependências de UI: Bootstrap 5 e Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <!-- Folha de estilo personalizada -->
   <link rel="stylesheet" href="assets/css/styles.css">
@@ -166,15 +165,20 @@
       </div>
     </section>
 
-    <!-- SEÇÃO 4: GALERIA INTERATIVA (SWIPER) -->
+    <!-- SEÇÃO 4: GALERIA INTERATIVA (BOOTSTRAP CAROUSEL) -->
     <section id="secao4" class="page-section mb-5">
       <div class="grid-container">
-        <h2 class="h3 mb-4">Galeria de imagens</h2>
+        <div class="section-banner-title">
+          <h2 class="m-0 h2">Galeria de imagens</h2>
+        </div>
+        
 
-        <div class="swiper gallerySwiper">
-          <div class="swiper-wrapper">
+        <div id="galleryCarousel" class="carousel slide custom-gallery-carousel" data-bs-ride="carousel">
+          
+          <!-- Slides da Galeria -->
+          <div class="carousel-inner">
 
-            <div class="swiper-slide">
+            <div class="carousel-item active">
               <div class="gallery-slide-card">
                 <div class="grid-gallery-trio">
                   <img src="assets/img/h1.jpg" alt="Galeria h1" />
@@ -184,7 +188,7 @@
               </div>
             </div>
 
-            <div class="swiper-slide">
+            <div class="carousel-item">
               <div class="gallery-slide-card">
                 <div class="grid-gallery-trio">
                   <img src="assets/img/m1.jpg" alt="Galeria m1" />
@@ -194,7 +198,7 @@
               </div>
             </div>
 
-            <div class="swiper-slide">
+            <div class="carousel-item">
               <div class="gallery-slide-card">
                 <div class="grid-gallery-trio">
                   <img src="assets/img/su1.jpg" alt="Galeria su1" />
@@ -204,7 +208,7 @@
               </div>
             </div>
 
-            <div class="swiper-slide">
+            <div class="carousel-item">
               <div class="gallery-slide-card">
                 <div class="grid-gallery-trio">
                   <img src="assets/img/toh1.jpg" alt="Galeria toh1" />
@@ -214,7 +218,7 @@
               </div>
             </div>
 
-            <div class="swiper-slide">
+            <div class="carousel-item">
               <div class="gallery-slide-card">
                 <div class="grid-gallery-trio">
                   <img src="assets/img/zzz1.jpg" alt="Galeria zzz1" />
@@ -226,12 +230,25 @@
 
           </div>
 
-          <!-- Botões e Paginação do Swiper -->
-          <div class="swiper-controls-center">
-            <button class="swiper-button-prev-custom" aria-label="Anterior"><i class="bi bi-chevron-left"></i></button>
-            <button class="swiper-button-next-custom" aria-label="Próximo"><i class="bi bi-chevron-right"></i></button>
+          <!-- Controles do Carrossel (< >) -->
+          <div class="carousel-controls-center">
+            <button class="carousel-btn-custom" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev" aria-label="Anterior">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="carousel-btn-custom" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next" aria-label="Próximo">
+              <i class="bi bi-chevron-right"></i>
+            </button>
           </div>
-          <div class="swiper-pagination"></div>
+
+          <!-- Indicadores/Paginação do Carrossel -->
+          <div class="carousel-indicators custom-indicators">
+            <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+          </div>
+
         </div>
 
       </div>
@@ -306,7 +323,6 @@
 
   <!-- SCRIPTS EXTERNOS E ARQUIVO LOCAL -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="assets/js/script.js"></script>
 </body>
 </html>
