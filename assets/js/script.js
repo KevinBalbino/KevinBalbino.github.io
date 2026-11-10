@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // =========================================================
-  // 7. GALERIA CARROSSEL (SWIPER + ALTERNÂNCIA DE TAMANHO DOS BROCHES)
+  // 7. GALERIA CARROSSEL (SWIPER + WATCHDOG DE ANIMAÇÃO)
   // =========================================================
   const gallerySwiperElement = document.querySelector(".gallerySwiper");
 
@@ -171,8 +171,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentStep = 0;
     let isProcessing = false;
+    let lastStepTime = 0;
+    let watchdogTimer = null;
 
-    // Função para limpar transforms de slides inativos
+    // Função para limpar os estilos de broches em slides inativos
     const resetAllImages = () => {
       const allImages = gallerySwiperElement.querySelectorAll(".grid-gallery-trio img");
       allImages.forEach(img => {
@@ -189,6 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const images = activeSlide.querySelectorAll(".grid-gallery-trio img");
       if (images.length !== 3) return;
+
+      // Registra o timestamp da execução atual para o Watchdog verificar
+      lastStepTime = Date.now();
 
       const currentScales = scaleStates[currentStep % scaleStates.length];
       const targetImg = images[0];
@@ -215,14 +220,66 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     };
 
+    // Inicia o ciclo no slide visível
     const startSlideCycle = () => {
       isProcessing = true;
       currentStep = 0;
+      lastStepTime = Date.now();
       resetAllImages();
 
       requestAnimationFrame(() => {
         triggerNextScaleStep();
       });
+
+      startWatchdog();
+    };
+
+    // Parar temporizadores ao trocar de slide
+    const stopSlideCycle = () => {
+      isProcessing = false;
+      stopWatchdog();
+      resetAllImages();
+    };
+
+    // =========================================================
+    // GATILHO WATCHDOG (VERIFICA SE A ANIMAÇÃO PAROU OU TRAVOU)
+    // =========================================================
+    const checkAnimationHealth = () => {
+      if (!isProcessing) return;
+
+      const now = Date.now();
+      const timeSinceLastStep = now - lastStepTime;
+
+      // O tempo normal de uma transição é ~1.1s (600ms CSS + 500ms de intervalo).
+      // Se passar de 2.5s sem nenhuma troca, significa que houve travamento ou falha.
+      if (timeSinceLastStep > 2500) {
+        console.warn("Watchdog: Falha detectada na troca de tamanho dos broches. Reiniciando ciclo...");
+        
+        // Remove ouvintes pendentes que possam ter ficado órfãos
+        const activeSlide = gallerySwiperElement.querySelector(".swiper-slide-active");
+        if (activeSlide) {
+          const images = activeSlide.querySelectorAll(".grid-gallery-trio img");
+          if (images.length > 0) {
+            images[0].removeEventListener("transitionend", triggerNextScaleStep);
+          }
+        }
+
+        // Tenta reativar o ciclo
+        triggerNextScaleStep();
+      }
+    };
+
+    const startWatchdog = () => {
+      stopWatchdog();
+      // Verifica a cada 2 segundos o estado de saúde da animação
+      watchdogTimer = setInterval(checkAnimationHealth, 2000);
+    };
+
+    const stopWatchdog = () => {
+      if (watchdogTimer) {
+        clearInterval(watchdogTimer);
+        watchdogTimer = null;
+      }
     };
 
     // Inicialização do Swiper.js com Coverflow
@@ -233,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
       slidesPerView: "auto",
       loop: true,
       speed: 700,
-      autoplay: false, // Sem passagem automática de slides
+      autoplay: false,
       coverflowEffect: {
         rotate: 0,
         stretch: 0,
@@ -255,8 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
           startSlideCycle();
         },
         slideChangeTransitionStart: function () {
-          isProcessing = false;
-          resetAllImages();
+          stopSlideCycle();
         },
         slideChangeTransitionEnd: function () {
           startSlideCycle();
