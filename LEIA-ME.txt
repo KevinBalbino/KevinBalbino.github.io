@@ -1,0 +1,40 @@
+Nome: Kevin da Silva Balbino Nº 23 T2DEV-T2
+
+Projeto: Broches do Lemuel
+A temática se baseia em um site de vendas de broches online de um vendedor autônomo, com uma linha mais dinâmica e artística, refletindo a identidade do individuo que inspirou o site, exemplos de produtos e de aparência para o público-alvo.
+
+Tecnologias utilizadas:
+HTML5
+CSS3
+JavaScript
+Bootstrap 5
+
+Recursos do JavaScript:
+Tema claro e escuro dinâmico;
+Menu de âncoras para diferentes seções do site junto de uma sidebar em resoluções menores
+Hover com elevação nos cards;
+Parallax nos elementos da seção inicial;
+Efeito de seleção nos botões;
+Galeria de imagens interativas com carrossel e hover;
+Simulação de tela de compras dinâmica e reutilizável com IDs;
+Simulação de formulário de contato com diferentes formulários.
+
+Recursos do CSS:
+Importação das fontes locais Inclusive Sans e Ubuntu Mono;
+Variáveis e temas com :root;
+Grid e layout responsivo para diferentes resoluções;
+Normalização e ajuste dinâmico de textos, margens e cartões para diferentes tamanhos;
+Animações e transições fluídas;
+Estilizações visuais como sombras, transformações e filtros
+
+Estrutura da pasta:
+/
+├── index.html                  # Arquivo principal da One Page
+├── Leia-Me.txt                   # Documentação do projeto
+└── assets/
+    ├── css/
+    │   └── styles.css          # Estilos customizados e variáveis de tema
+    ├── js/
+    │   └── script.js           # Lógica e interatividade em JavaScript
+    ├── img/                    # Imagens dos produtos e da galeria
+    └── fonts/                  # Arquivos das fontes locais (Inclusive Sans e Ubuntu Mono)
