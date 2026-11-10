@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <!-- Metadados de codificação e viewport responsiva -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broches do Lemuel | Venda de Bottons Personalizados</title>
+
+  <!-- CDNs das dependências de UI: Bootstrap 5, Bootstrap Icons e Swiper.js -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- Folha de estilo personalizada -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+  <!-- CABEÇALHO E NAVEGAÇÃO FIXA (NAVBAR) -->
+  <header class="header-navbar navbar">
+    <div class="grid-container d-flex align-items-center justify-content-between w-100">
+      <a class="navbar-brand text-white fw-bold fs-3 m-0" href="#">Broches do Lemuel</a>
+
+      <!-- Botão Hambúrguer para alternar exibição da Sidebar no Mobile -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Menu de links âncora e alternador de tema -->
+      <nav class="nav-menu-wrapper" id="navMenu">
+        <div class="sidebar-header d-lg-none">
+          <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Fechar menu">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <ul class="nav-box-list">
+          <li class="nav-box-item"><a href="#secao1">Produtos</a></li>
+          <li class="nav-box-item"><a href="#secao2">Sobre nós</a></li>
+          <li class="nav-box-item"><a href="#secao3">Clientes</a></li>
+          <li class="nav-box-item"><a href="#secao4">Exemplos</a></li>
+          <li class="nav-box-item theme-item">
+            <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Alternar tema">
+              <i class="bi bi-moon-fill me-1"></i> Escuro
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- SEÇÃO PRINCIPAL (HERO SECTION) -->
+  <section class="hero-section">
+    <div class="grid-container">
+      <div class="hero-grid">
+        <div class="hero-text-col">
+          <h1 class="mb-3">Broches Caseiros para todas as Personalidades</h1>
+          <p class="fs-5 mb-4">Encomende broches de tamanhos diferentes com a imagem de sua escolha.</p>
+          <div class="d-flex gap-3 flex-wrap justify-content-center justify-content-lg-start">
+            <a href="#secao1" class="btn btn-custom-primary">Ver Produtos</a>
+            <a href="#contato" class="btn btn-outline-dark fw-bold">Encomendar</a>
+          </div>
+        </div>
+        <!-- Grafismos alvo do efeito Parallax no JS -->
+        <div class="hero-graphics-col">
+          <div class="circle-accent circle-1"></div>
+          <div class="circle-accent circle-2"></div>
+          <div class="circle-accent circle-3"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="py-5">
+
+    <!-- SEÇÃO 1: CATÁLOGO DE PRODUTOS -->
+    <section id="secao1" class="page-section mb-5">
+      <div class="grid-container">
+        <div class="section-banner-title">
+          <h2 class="m-0 h3">Produtos</h2>
+        </div>
+        <div class="section-grid-3col-products">
+
+          <article class="botton-card">
+            <div class="card-img-placeholder"><i class="bi bi-controller"></i></div>
+            <h4>Broche Menor</h4>
+            <p>70mm²</p>
+            <button class="btn btn-custom-primary w-100 open-modal-btn" data-title="Broche Menor">Comprar</button>
+          </article>
+          
+          <article class="botton-card">
+            <div class="card-img-placeholder"><i class="bi bi-brush"></i></div>
+            <h4>Broche Médio</h4>
+            <p>125mm²</p>
+            <button class="btn btn-custom-primary w-100 open-modal-btn" data-title="Broche Médio">Comprar</button>
+          </article>
+
+          <article class="botton-card">
+            <div class="card-img-placeholder"><i class="bi bi-star"></i></div>
+            <h4>Broche Maior</h4>
+            <p>237mm²</p>
+            <button class="btn btn-custom-primary w-100 open-modal-btn" data-title="Broche Maior">Comprar</button>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2: SOBRE NÓS -->
+    <section id="secao2" class="page-section mb-5">
+      <div class="grid-container">
+        <div class="section-banner-title">
+          <h2 class="m-0 h3">Seção 2 - Sobre Nós</h2>
+        </div>
+        <div class="section-grid-asymmetric">
+          <div class="secao2-block-green">
+            <h3>Qualidade Ótima</h3>
+            <p class="m-0">Os broches são produzidos com material de qualidade e equipamento adequado.</p>
+          </div>
+          <div class="secao2-block-green">
+            <h3>Produção Rápida</h3>
+            <p class="m-0">Produção e entrega rápida.</p>
+          </div>
+          <div class="secao2-stacked-col">
+            <div class="secao2-sub-green">
+              <h4>Caseiro</h4>
+              <p class="m-0">Broches feitos em casa e com paixão.</p>
+            </div>
+            <div class="secao2-sub-green">
+              <h4>Economico</h4>
+              <p class="m-0">Preços justos e acessíveis.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3: DEPOIMENTOS DE CLIENTES -->
+    <section id="secao3" class="page-section mb-5">
+      <div class="grid-container">
+        <div class="section-banner-title">
+          <h2 class="m-0 h3">Opiniões dos clientes</h2>
+        </div>
+        <div class="section-grid-3col">
+          <div class="testimonial-card-item">
+            <div class="testimonial-card">
+              <p class="fs-5">"Aumentaram a minha auto estima!"</p>
+              <small class="fw-bold">— Kevin Balbino</small>
+            </div>
+          </div>
+          <div class="testimonial-card-item">
+            <div class="testimonial-card">
+              <p class="fs-5">"Excelente qualidade e material!"</p>
+              <small class="fw-bold">— Fulano da Costa</small>
+            </div>
+          </div>
+          <div class="testimonial-card-item">
+            <div class="testimonial-card">
+              <p class="fs-5">"Entrega muito rápida!"</p>
+              <small class="fw-bold">— Fulana da Silva</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 4: GALERIA INTERATIVA (SWIPER) -->
+    <section id="secao4" class="page-section mb-5">
+      <div class="grid-container">
+        <h2 class="h3 mb-4">Galeria de imagens</h2>
+
+        <div class="swiper gallerySwiper">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="gallery-slide-card">
+                <div class="grid-gallery-trio">
+                  <img src="assets/img/h1.jpg" alt="Galeria h1" />
+                  <img src="assets/img/h2.jpg" alt="Galeria h2" />
+                  <img src="assets/img/h3.jpg" alt="Galeria h3" />
+                </div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="gallery-slide-card">
+                <div class="grid-gallery-trio">
+                  <img src="assets/img/m1.jpg" alt="Galeria m1" />
+                  <img src="assets/img/m2.jpg" alt="Galeria m2" />
+                  <img src="assets/img/m3.jpg" alt="Galeria m3" />
+                </div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="gallery-slide-card">
+                <div class="grid-gallery-trio">
+                  <img src="assets/img/su1.jpg" alt="Galeria su1" />
+                  <img src="assets/img/su2.jpg" alt="Galeria su2" />
+                  <img src="assets/img/su3.jpg" alt="Galeria su3" />
+                </div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="gallery-slide-card">
+                <div class="grid-gallery-trio">
+                  <img src="assets/img/toh1.jpg" alt="Galeria toh1" />
+                  <img src="assets/img/toh2.jpg" alt="Galeria toh2" />
+                  <img src="assets/img/toh3.jpg" alt="Galeria toh3" />
+                </div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="gallery-slide-card">
+                <div class="grid-gallery-trio">
+                  <img src="assets/img/zzz1.jpg" alt="Galeria zzz1" />
+                  <img src="assets/img/zzz2.jpg" alt="Galeria zzz2" />
+                  <img src="assets/img/zzz3.jpg" alt="Galeria zzz3" />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Botões e Paginação do Swiper -->
+          <div class="swiper-controls-center">
+            <button class="swiper-button-prev-custom" aria-label="Anterior"><i class="bi bi-chevron-left"></i></button>
+            <button class="swiper-button-next-custom" aria-label="Próximo"><i class="bi bi-chevron-right"></i></button>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SEÇÃO 5: FORMULÁRIO DE CONTATO -->
+    <section id="contato" class="page-section mb-5">
+      <div class="grid-container">
+        <div class="contact-form-container">
+          <h2 class="h3 mb-4">Entre em Contato</h2>
+          <form id="contactForm" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6 formgroup">
+                <label for="nome" class="form-label">Nome Completo *</label>
+                <input type="text" class="form-control" id="nome" required placeholder="Seu nome">
+                <div class="invalid-feedback">Por favor, informe seu nome.</div>
+              </div>
+              <div class="col-md-6 formgroup">
+                <label for="email" class="form-label">E-mail *</label>
+                <input type="email" class="form-control" id="email" required placeholder="seuemail@dominio.com">
+                <div class="invalid-feedback">Por favor, insira um e-mail válido.</div>
+              </div>
+              <div class="col-md-12 formgroup">
+                <label for="assunto" class="form-label">Assunto *</label>
+                <input type="text" class="form-control" id="assunto" required placeholder="Assunto da mensagem">
+                <div class="invalid-feedback">Por favor, informe o assunto.</div>
+              </div>
+              <div class="col-md-12 formgroup">
+                <label for="mensagem" class="form-label">Mensagem *</label>
+                <textarea class="form-control" id="mensagem" rows="4" required placeholder="Escreva sua mensagem..."></textarea>
+                <div class="invalid-feedback">A mensagem não pode ficar vazia.</div>
+              </div>
+              <div class="col-12 mt-4">
+                <button type="submit" class="btn btn-custom-primary px-4 py-2 fw-bold">Enviar Mensagem</button>
+              </div>
+            </div>
+          </form>
+          <!-- Contêiner dinâmico de exibição dos alertas -->
+          <div id="formAlert" class="alert d-none mt-3" role="alert"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RODAPÉ DA PÁGINA -->
+  <footer class="footer-custom py-4">
+    <div class="grid-container text-center">
+      <p class="m-0">&copy; 2026 Broches do Lemuel.</p>
+    </div>
+  </footer>
+
+  <!-- MODAL BOOTSTRAP PARA DETALHES DE PRODUTOS -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="productModalTitle">Detalhes do Produto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <i class="bi bi-patch-check display-1 text-success mb-3"></i>
+          <p class="fs-5" id="productModalBody">Você selecionou um item exclusivo.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-success">Adicionar ao Carrinho</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS EXTERNOS E ARQUIVO LOCAL -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
